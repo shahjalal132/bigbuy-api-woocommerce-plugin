@@ -14,7 +14,7 @@ function product_insert_woocommerce() {
     $table_name = $wpdb->prefix . 'sync_products';
 
     // Retrieve pending products from the database
-    $products = $wpdb->get_results( "SELECT * FROM $table_name LIMIT 1" );
+    $products = $wpdb->get_results( "SELECT * FROM $table_name WHERE status = 'pending' LIMIT 1" );
 
     // WooCommerce store information
     $website_url     = home_url();
