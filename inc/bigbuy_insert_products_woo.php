@@ -1,22 +1,29 @@
 <?php
 
+// Include necessary files
 require_once PLUGIN_PATH . '/vendor/autoload.php';
 use Automattic\WooCommerce\Client;
 
+// Function to insert products into WooCommerce
 function product_insert_woocommerce() {
+
     // Get global $wpdb object
     global $wpdb;
+
     // Define table names
     $table_name = $wpdb->prefix . 'sync_products';
 
     // Retrieve pending products from the database
     $products = $wpdb->get_results( "SELECT * FROM $table_name LIMIT 1" );
 
+    // WooCommerce store information
     $website_url     = home_url();
     $consumer_key    = 'ck_b38274103f71580c80b5fe2a268451152a75e546';
     $consumer_secret = 'cs_4105c00f5c8bc420039a3c6f0faa02054f5974fd';
 
     foreach ( $products as $product ) {
+
+        // Retrieve product data
         $p_id                = $product->id;
         $fournisseur         = $product->fournisseur;
         $product_category    = $product->product_category;
@@ -44,7 +51,7 @@ function product_insert_woocommerce() {
         $image_url_string = $product->image_url;
         $image_url_array  = explode( ',', $image_url_string );
 
-        // Set up the API client with your WooCommerce store URL and credentials
+        // Set up the API client with WooCommerce store URL and credentials
         $client = new Client(
             $website_url,
             $consumer_key,
@@ -54,7 +61,7 @@ function product_insert_woocommerce() {
             ]
         );
 
-        // if sku already exists, update the product
+        // Check if the product already exists in WooCommerce
         $args = array(
             'post_type'  => 'product',
             'meta_query' => array(
@@ -75,7 +82,7 @@ function product_insert_woocommerce() {
             // get product id
             $product_id = get_the_ID();
 
-            // Update the product
+            // Update the product  if already exists
             $product_data = [
                 'name'        => $product_name,
                 'sku'         => $id_bigbuy,
@@ -95,7 +102,7 @@ function product_insert_woocommerce() {
 
         } else {
 
-            // Create a new product
+            // Create a new product if not exists
             $product_data = [
                 'name'        => $product_name,
                 'sku'         => $id_bigbuy,
@@ -114,7 +121,7 @@ function product_insert_woocommerce() {
             $product    = $client->post( 'products', $product_data );
             $product_id = $product->id;
 
-            // Set product details
+            // Set product information
             wp_set_object_terms( $product_id, 'simple', 'product_type' );
             update_post_meta( $product_id, '_visibility', 'visible' );
             update_post_meta( $product_id, '_stock_status', 'instock' );

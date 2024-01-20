@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Plugin Name:       Bigbuy API
  * Plugin URI:        https://bigbuy.api.com
@@ -11,22 +12,21 @@
  */
 
 // Define plugin path
-if (!defined('PLUGIN_PATH')) {
-    define('PLUGIN_PATH', untrailingslashit(plugin_dir_path(__FILE__)));
+if ( !defined( 'BIGBUY_PLUGIN_PATH' ) ) {
+    define( 'BIGBUY_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 }
 
 // Define plugin url
-if (!defined('PLUGIN_URI')) {
-    define('PLUGIN_URI', untrailingslashit(plugin_dir_url(__FILE__)));
+if ( !defined( 'BIGBUY_PLUGIN_URI' ) ) {
+    define( 'BIGBUY_PLUGIN_URI', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 }
 
 // Register the activation hook
-register_activation_hook(__FILE__, 'bigbuy_db_products_table_create');
+register_activation_hook( __FILE__, 'bigbuy_db_products_table_create' );
 // Register the deactivation hook
-register_deactivation_hook(__FILE__, 'bigbuy_db_products_table_remove');
+register_deactivation_hook( __FILE__, 'bigbuy_db_products_table_remove' );
 
 // Require file
-require_once PLUGIN_PATH . '/inc/bigbuy_products_api.php';
-require_once PLUGIN_PATH . '/inc/bigbuy_insert_products_wooco.php';
+require_once BIGBUY_PLUGIN_PATH . '/inc/bigbuy_create_db_tables.php';
+require_once BIGBUY_PLUGIN_PATH . '/inc/bigbuy_insert_products_woo.php';
 
-     
