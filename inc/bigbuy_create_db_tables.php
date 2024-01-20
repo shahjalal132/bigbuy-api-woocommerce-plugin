@@ -1,7 +1,6 @@
 <?php
 
-function bigbuy_db_products_table_create()
-{
+function bigbuy_db_products_table_create() {
     global $wpdb;
 
     $table_name      = $wpdb->prefix . 'sync_products';
@@ -45,13 +44,12 @@ function bigbuy_db_products_table_create()
 }
 
 // Deactivation hook: Remove database table
-function bigbuy_db_products_table_remove()
-{
+function bigbuy_db_products_table_remove() {
     global $wpdb;
 
     $table_name = $wpdb->prefix . 'sync_products';
     $sql        = "DROP TABLE IF EXISTS $table_name;";
-    $wpdb->query($sql);
+    $wpdb->query( $sql );
 }
 
 

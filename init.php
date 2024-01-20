@@ -26,7 +26,7 @@ register_activation_hook( __FILE__, 'bigbuy_db_products_table_create' );
 // Register the deactivation hook
 register_deactivation_hook( __FILE__, 'bigbuy_db_products_table_remove' );
 
-// Require file
+// Require files
 require_once BIGBUY_PLUGIN_PATH . '/inc/bigbuy_create_db_tables.php';
 require_once BIGBUY_PLUGIN_PATH . '/inc/bigbuy_insert_products_woo.php';
 

@@ -1,7 +1,7 @@
 <?php
 
 // Include necessary files
-require_once PLUGIN_PATH . '/vendor/autoload.php';
+require_once BIGBUY_PLUGIN_PATH . '/vendor/autoload.php';
 use Automattic\WooCommerce\Client;
 
 // Function to insert products into WooCommerce
@@ -25,10 +25,10 @@ function product_insert_woocommerce() {
 
         // Retrieve product data
         $p_id                = $product->id;
-        $fournisseur         = $product->fournisseur;
+        $fournisseur         = $product->supplier;
         $product_category    = $product->product_category;
         $id_bigbuy           = $product->id_bigbuy;
-        $Category            = $product->Category;
+        $Category_code       = $product->category_code;
         $product_name        = $product->product_name;
         $attributes1         = $product->attributes1;
         $attributes2         = $product->attributes2;
@@ -42,13 +42,15 @@ function product_insert_woocommerce() {
         $seo_title           = $product->seo_title;
         $brand               = $product->brand;
         $feature             = $product->feature;
-        $regular_price       = $product->product_price;
-        $sale_price          = $product->product_pvp;
         $EAN                 = $product->EAN;
         $stock               = $product->stock;
 
+        // get product price
+        $regular_price = $product->product_price;
+        $sale_price    = $product->product_pvp;
+
         // product images
-        $image_url_string = $product->image_url;
+        $image_url_string = $product->image_urls;
         $image_url_array  = explode( ',', $image_url_string );
 
         // Set up the API client with WooCommerce store URL and credentials
